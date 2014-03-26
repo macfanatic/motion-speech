@@ -4,8 +4,9 @@ describe Motion::Speech::EventBlock do
   end
 
   it "has has all the events we need" do
-    Motion::Speech::EventBlock::Events.should.include 'start'
-    Motion::Speech::EventBlock::Events.should.include 'finish'
+    %w(start finish cancel pause).each do |e|
+      Motion::Speech::EventBlock::Events.should.include e
+    end
   end
 
   it "exposes methods for 'start' and 'finish'" do

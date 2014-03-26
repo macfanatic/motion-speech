@@ -112,6 +112,32 @@ describe Motion::Speech::Speaker do
         speaker.send 'speechSynthesizer:didFinishSpeechUtterance:', speaker.synthesizer, speaker.utterance
         @called_block.should.be.true
       end
+
+      it "calls the paused block" do
+        speaker = Motion::Speech::Speaker.new "lorem" do |events|
+          events.pause { @called_block = true }
+        end
+
+        @called_block = nil
+        @called_block.should.be.nil
+
+        # Send delegate message immediately, AVFoundation is tested      
+        speaker.send 'speechSynthesizer:didPauseSpeechUtterance:', speaker.synthesizer, speaker.utterance
+        @called_block.should.be.true
+      end
+
+      it "calls the cancelled block" do
+        speaker = Motion::Speech::Speaker.new "lorem" do |events|
+          events.cancel { @called_block = true }
+        end
+
+        @called_block = nil
+        @called_block.should.be.nil
+
+        # Send delegate message immediately, AVFoundation is tested      
+        speaker.send 'speechSynthesizer:didCancelSpeechUtterance:', speaker.synthesizer, speaker.utterance
+        @called_block.should.be.true
+      end
     end
 
   end

@@ -49,6 +49,14 @@ module Motion
         events.call :start, self
       end
 
+      def speechSynthesizer(s, didCancelSpeechUtterance: utterance)
+        events.call :cancel, self
+      end
+
+      def speechSynthesizer(s, didPauseSpeechUtterance: utterance)
+        events.call :pause, self
+      end
+
       def events
         @events ||= EventBlock.new
       end
