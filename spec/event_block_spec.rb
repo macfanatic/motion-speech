@@ -19,4 +19,8 @@ describe Motion::Speech::EventBlock do
     @event.start.call.should.be.true
   end
 
+  it "allows you to call an event" do
+    @event.start { true }
+    @event.call(:start, nil).should.be.true
+  end
 end

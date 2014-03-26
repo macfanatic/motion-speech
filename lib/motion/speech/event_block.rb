@@ -14,6 +14,10 @@ module Motion
         end
       end
 
+      def call(event, speaker)
+        block = send(event)
+        block.call(speaker) unless block.nil?
+      end
     end
   end
 end

@@ -48,3 +48,17 @@ my_name = Name.new("Matt Brewer")
 Motion::Speech::Speaker.speak my_name
 # => "My name is Matt Brewer" spoken
 ```
+
+This will look somewhat familiar to Rails developers, can work off a system of block callbacks for further control.
+
+```ruby
+Motion::Speech::Speaker.speak "lorem" do |events|
+  events.start do |speaker|
+    puts "started speaking: '#{speaker.message}'"
+  end
+
+  events.finish do |speaker|
+    puts "finished speaking: '#{speaker.message}'"
+  end
+end
+```

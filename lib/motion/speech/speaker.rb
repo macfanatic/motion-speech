@@ -10,7 +10,16 @@ module Motion
       def initialize(speakable, options={}, &block)
         @message = string_from_speakable(speakable)
         @options = options
-        @configuration_block = block
+
+        if block_given?
+          if block.arity == 0
+            events.finish &block
+          elsif block.arity == 1
+            block.call events
+          else
+            raise ArgumentError, 'block must accept either 0 or 1 arguments'
+          end
+        end
       end
 
       def speak(&block)
@@ -30,20 +39,18 @@ module Motion
         @synthesizer ||= AVSpeechSynthesizer.new.tap { |s| s.delegate = self }
       end
 
-      def config
-        @configuration_block
-      end
-
-      def has_config?
-        !config.nil?
-      end
-
       private
 
       def speechSynthesizer(s, didFinishSpeechUtterance: utterance)
-        if has_config?
-          config.call
-        end
+        events.call :finish, self
+      end
+
+      def speechSynthesizer(s, didStartSpeechUtterance: utterance)
+        events.call :start, self
+      end
+
+      def events
+        @events ||= EventBlock.new
       end
 
       def string_from_speakable(speakable)
