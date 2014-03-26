@@ -1,0 +1,19 @@
+module Motion
+  module Speech
+    class EventBlock
+
+      Events = %w(start finish).freeze
+
+      Events.each do |method|
+        define_method method do |*args, &block|
+          if !block.nil?
+            instance_variable_set("@#{method}_block", block)
+          else
+            instance_variable_get("@#{method}_block")
+          end
+        end
+      end
+
+    end
+  end
+end
