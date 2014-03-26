@@ -16,6 +16,12 @@ describe Motion::Speech::Speaker do
       speaker = Motion::Speech::Speaker.new "lorem", key: :value
       speaker.options.should.be.equal key: :value
     end
+
+    it "calls #to_speakable on sentence if supported" do
+      sentence = Speakable.new("lorem")
+      speaker = Motion::Speech::Speaker.new sentence
+      speaker.message.should.be.equal sentence.to_speakable
+    end
   end
 
   describe '#utterance' do

@@ -7,8 +7,9 @@ module Motion
         new(*args, &block).speak
       end
 
-      def initialize(str, options={}, &block)
-        @message, @options = str, options
+      def initialize(speakable, options={}, &block)
+        @message = string_from_speakable(speakable)
+        @options = options
         @configuration_block = block
       end
 
@@ -42,6 +43,14 @@ module Motion
       def speechSynthesizer(s, didFinishSpeechUtterance: utterance)
         if has_config?
           config.call
+        end
+      end
+
+      def string_from_speakable(speakable)
+        if speakable.respond_to?(:to_speakable)
+          speakable.to_speakable
+        else
+          speakable
         end
       end
 

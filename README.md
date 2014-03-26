@@ -33,3 +33,18 @@ Motion::Speech::Speaker.speak "Getting started with speech" do
   puts "completed the utterance"
 end
 ```
+
+## Advanced Usage
+There are several more advanced examples that you can follow below, allowing more customization of the utterance playback including voices (coming soon) as well as contriving arbitrary objects for speech.
+
+```ruby
+class Name < String
+  def to_speakable
+    "My name is #{self}"
+  end
+end
+
+my_name = Name.new("Matt Brewer")
+Motion::Speech::Speaker.speak my_name
+# => "My name is Matt Brewer" spoken
+```
