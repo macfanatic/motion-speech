@@ -74,3 +74,28 @@ Motion::Speech::Speaker.speak "lorem" do |events|
   end
 end
 ```
+
+## Controlling playback
+
+```ruby
+speaker = Motion::Speech::Speaker.speak "lorem"
+
+# pausing playback accepts symbols or actual structs
+speaker.pause :word
+speaker.pause :immediate
+speaker.pause AVSpeechBoundaryImmediate
+
+speaker.paused?
+=> true
+
+speaker.speaking?
+=> false
+
+# stopping playback accepts symbols or actual structs
+speaker.stop :word
+speaker.stop :immediate
+speaker.stop AVSpeechBoundaryImmediate
+
+# resume playback
+speaker.resume
+```

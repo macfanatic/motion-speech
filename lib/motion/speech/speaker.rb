@@ -3,6 +3,8 @@ module Motion
     class Speaker
       attr_reader :message, :options
 
+      MultipleCallsToSpeakError = Class.new(StandardError)
+
       def self.speak(*args, &block)
         new(*args, &block).speak
       end
@@ -10,6 +12,7 @@ module Motion
       def initialize(speakable, options={}, &block)
         @message = string_from_speakable(speakable)
         @options = options
+        @spoken = false
 
         if block_given?
           if block.arity == 0
@@ -22,9 +25,32 @@ module Motion
         end
       end
 
-      def speak(&block)
+      def speak
+        raise MultipleCallsToSpeakError if @spoken
+
         synthesizer.speakUtterance utterance
+        @spoken = true
         self
+      end
+
+      def pause(boundary)
+        synthesizer.pauseSpeakingAtBoundary boundary_from_symbol(boundary)
+      end
+
+      def stop(boundary)
+        synthesizer.stopSpeakingAtBoundary boundary_from_symbol(boundary)
+      end
+
+      def resume
+        synthesizer.continueSpeaking
+      end
+
+      def paused?
+        synthesizer.paused?
+      end
+
+      def speaking?
+        synthesizer.speaking?
       end
 
       def utterance
@@ -73,6 +99,16 @@ module Motion
         end
       end
 
+      def boundary_from_symbol(sym)
+        case sym
+        when :word
+          AVSpeechBoundaryWord
+        when :immediate
+          AVSpeechBoundaryImmediate
+        when Fixnum
+          sym
+        end
+      end
     end
   end
 end

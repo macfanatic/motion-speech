@@ -22,6 +22,15 @@ describe Motion::Speech::Speaker do
       speaker = Motion::Speech::Speaker.new sentence
       speaker.message.should.be.equal sentence.to_speakable
     end
+
+    it "raises exception if you make multiple calls to #speak" do
+      speaker = Motion::Speech::Speaker.new "lorem"
+      speaker.speak
+
+      should.raise(Motion::Speech::Speaker::MultipleCallsToSpeakError) do
+        speaker.speak
+      end
+    end
   end
 
   describe '#utterance' do
