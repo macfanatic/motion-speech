@@ -4,7 +4,7 @@ describe Motion::Speech::EventBlock do
   end
 
   it "has has all the events we need" do
-    %w(start finish cancel pause).each do |e|
+    %w(start finish cancel pause resume).each do |e|
       Motion::Speech::EventBlock::Events.should.include e
     end
   end

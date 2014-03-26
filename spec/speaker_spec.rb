@@ -138,6 +138,19 @@ describe Motion::Speech::Speaker do
         speaker.send 'speechSynthesizer:didCancelSpeechUtterance:', speaker.synthesizer, speaker.utterance
         @called_block.should.be.true
       end
+
+      it "calls the resumed block" do
+        speaker = Motion::Speech::Speaker.new "lorem" do |events|
+          events.resume { @called_block = true }
+        end
+
+        @called_block = nil
+        @called_block.should.be.nil
+
+        # Send delegate message immediately, AVFoundation is tested      
+        speaker.send 'speechSynthesizer:didContinueSpeechUtterance:', speaker.synthesizer, speaker.utterance
+        @called_block.should.be.true
+      end
     end
 
   end

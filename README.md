@@ -68,5 +68,9 @@ Motion::Speech::Speaker.speak "lorem" do |events|
   events.cancel do |speaker|
     puts "canceled while speaking: '#{speaker.message}'"
   end
+
+  events.resume do |speaker|
+    puts "resumed speaking: '#{speaker.message}'"
+  end
 end
 ```

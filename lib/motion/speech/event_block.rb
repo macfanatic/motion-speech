@@ -2,7 +2,7 @@ module Motion
   module Speech
     class EventBlock
 
-      Events = %w(start finish cancel pause).freeze
+      Events = %w(start finish cancel pause resume).freeze
 
       Events.each do |method|
         define_method method do |*args, &block|
