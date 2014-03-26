@@ -37,6 +37,8 @@ end
 ## Advanced Usage
 There are several more advanced examples that you can follow below, allowing more customization of the utterance playback including voices (coming soon) as well as contriving arbitrary objects for speech.
 
+### Speakable
+
 ```ruby
 class Name < String
   def to_speakable
@@ -49,6 +51,7 @@ Motion::Speech::Speaker.speak my_name
 # => "My name is Matt Brewer" spoken
 ```
 
+### Callbacks as blocks
 This will look somewhat familiar to Rails developers, can work off a system of block callbacks for further control.
 
 ```ruby
@@ -75,7 +78,32 @@ Motion::Speech::Speaker.speak "lorem" do |events|
 end
 ```
 
-## Controlling playback
+### Using methods for callbacks
+This is not unique to RubyMotion, but you can easily grab a block from a method on your class to use as a callback here too.
+
+```ruby
+class SomeController < UIViewController
+
+  def tapped_button(*args)
+    Motion::Speech::Speaker.speak "lorem" do |events|
+      events.start &method(:lock_ui)
+      events.finish &method(:unlock_ui)
+    end
+  end
+
+  private
+
+  def lock_iu(speaker)
+    self.view.userInteractionEnabled = false
+  end
+
+  def unlock_ui(speaker)
+    self.view.userInteractionEnabled = true
+  end
+end
+```
+
+### Controlling playback
 
 ```ruby
 speaker = Motion::Speech::Speaker.speak "lorem"
