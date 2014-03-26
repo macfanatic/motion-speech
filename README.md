@@ -48,3 +48,54 @@ my_name = Name.new("Matt Brewer")
 Motion::Speech::Speaker.speak my_name
 # => "My name is Matt Brewer" spoken
 ```
+
+This will look somewhat familiar to Rails developers, can work off a system of block callbacks for further control.
+
+```ruby
+Motion::Speech::Speaker.speak "lorem" do |events|
+  events.start do |speaker|
+    puts "started speaking: '#{speaker.message}'"
+  end
+
+  events.finish do |speaker|
+    puts "finished speaking: '#{speaker.message}'"
+  end
+
+  events.pause do |speaker|
+    puts "paused while speaking: '#{speaker.message}'"
+  end
+
+  events.cancel do |speaker|
+    puts "canceled while speaking: '#{speaker.message}'"
+  end
+
+  events.resume do |speaker|
+    puts "resumed speaking: '#{speaker.message}'"
+  end
+end
+```
+
+## Controlling playback
+
+```ruby
+speaker = Motion::Speech::Speaker.speak "lorem"
+
+# pausing playback accepts symbols or actual structs
+speaker.pause :word
+speaker.pause :immediate
+speaker.pause AVSpeechBoundaryImmediate
+
+speaker.paused?
+=> true
+
+speaker.speaking?
+=> false
+
+# stopping playback accepts symbols or actual structs
+speaker.stop :word
+speaker.stop :immediate
+speaker.stop AVSpeechBoundaryImmediate
+
+# resume playback
+speaker.resume
+```
