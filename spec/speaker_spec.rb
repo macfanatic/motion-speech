@@ -56,11 +56,19 @@ describe Motion::Speech::Speaker do
 
   describe 'config block' do
     before do
-      @speaker = Motion::Speech::Speaker.new("lorem") { true }
+      @speaker = Motion::Speech::Speaker.new("lorem") { @called_block = true }
     end
 
     it "stores the block" do
       @speaker.should.be.has_config
+    end
+
+    it "calls the block on completion" do
+      @called_block.should.be.nil
+
+      # Don't wait for the speech to actually conclude, just trust AVFoundation does it's job
+      @speaker.send 'speechSynthesizer:didFinishSpeechUtterance:', @speaker.synthesizer, @speaker.utterance
+      @called_block.should.be.true
     end
   end
 end

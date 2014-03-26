@@ -27,4 +27,9 @@ Motion::Speech::Speaker.speak "Getting started with speech"
 
 # Control the rate of speech
 Motion::Speech::Speaker.speak "Getting started with speech", rate: 1
+
+# Pass a block to be called when the speech is completed
+Motion::Speech::Speaker.speak "Getting started with speech" do
+  puts "completed the utterance"
+end
 ```

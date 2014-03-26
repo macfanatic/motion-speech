@@ -37,6 +37,14 @@ module Motion
         !config.nil?
       end
 
+      private
+
+      def speechSynthesizer(s, didFinishSpeechUtterance: utterance)
+        if has_config?
+          config.call
+        end
+      end
+
     end
   end
 end
