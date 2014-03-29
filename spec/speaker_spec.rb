@@ -17,12 +17,6 @@ describe Motion::Speech::Speaker do
       speaker.options.should.be.equal key: :value
     end
 
-    it "calls #to_speakable on sentence if supported" do
-      sentence = Speakable.new("lorem")
-      speaker = Motion::Speech::Speaker.new sentence
-      speaker.message.should.be.equal sentence.to_speakable
-    end
-
     it "raises exception if you make multiple calls to #speak" do
       speaker = Motion::Speech::Speaker.new "lorem"
       speaker.speak

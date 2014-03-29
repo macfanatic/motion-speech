@@ -1,7 +1,7 @@
 module Motion
   module Speech
     class Speaker
-      attr_reader :message, :options
+      attr_reader :options, :utterance
 
       MultipleCallsToSpeakError = Class.new(StandardError)
 
@@ -10,8 +10,8 @@ module Motion
       end
 
       def initialize(speakable, options={}, &block)
-        @message = string_from_speakable(speakable)
         @options = options
+        @utterance = Utterance.new(speakable, options)
         @spoken = false
 
         if block_given?
@@ -53,8 +53,8 @@ module Motion
         synthesizer.speaking?
       end
 
-      def utterance
-        @utterance ||= Utterance.new(message, options)
+      def message
+        utterance.message
       end
 
       def synthesizer
@@ -85,14 +85,6 @@ module Motion
 
       def events
         @events ||= EventBlock.new
-      end
-
-      def string_from_speakable(speakable)
-        if speakable.respond_to?(:to_speakable)
-          speakable.to_speakable
-        else
-          speakable
-        end
       end
 
       def boundary_from_symbol(sym)

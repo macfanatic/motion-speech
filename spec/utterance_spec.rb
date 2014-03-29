@@ -17,6 +17,12 @@ describe Motion::Speech::Utterance do
       utterance.message = "change the message"
       utterance.message.should.be.equal "change the message"
     end
+
+    it "calls :to_speakable" do
+      sentence = Speakable.new("lorem")
+      utterance = Motion::Speech::Utterance.new(sentence)
+      utterance.message.should.be.equal sentence.to_speakable
+    end
   end
 
   describe '#rate' do
