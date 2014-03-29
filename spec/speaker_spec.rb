@@ -12,11 +12,6 @@ describe Motion::Speech::Speaker do
       speaker.message.should.be.equal "lorem"
     end
 
-    it "accepts an options hash" do
-      speaker = Motion::Speech::Speaker.new "lorem", key: :value
-      speaker.options.should.be.equal key: :value
-    end
-
     it "raises exception if you make multiple calls to #speak" do
       speaker = Motion::Speech::Speaker.new "lorem"
       speaker.speak
