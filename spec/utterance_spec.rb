@@ -35,6 +35,26 @@ describe Motion::Speech::Utterance do
       utterance = Motion::Speech::Utterance.new(@message, rate: 1)
       utterance.rate.should.be.equal 1
     end
+
+    it "accepts a symbol for :minimum" do
+      utterance = Motion::Speech::Utterance.new(@message, rate: :minimum)
+      utterance.rate.should.be.equal AVSpeechUtteranceMinimumSpeechRate
+    end
+
+    it "accepts a symbol for :maximum" do
+      utterance = Motion::Speech::Utterance.new(@message, rate: :maximum)
+      utterance.rate.should.be.equal AVSpeechUtteranceMaximumSpeechRate
+    end
+
+    it "accepts a symbol for :default" do
+      utterance = Motion::Speech::Utterance.new(@message, rate: :default)
+      utterance.rate.should.be.equal AVSpeechUtteranceDefaultSpeechRate
+    end
+
+    it "raises an error when passed an unrecognized symbol" do
+      @utterance = Motion::Speech::Utterance.new @message
+      ->{ @utterance.rate = :unknown }.should.raise(ArgumentError)
+    end
   end
 
 end

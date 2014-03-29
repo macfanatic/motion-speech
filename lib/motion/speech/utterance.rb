@@ -11,8 +11,13 @@ module Motion
         super string_from_speakable(speakable)
       end
 
+      def setRate(multiplier)
+        super rate_for_symbol_or_float(multiplier)
+      end
+
       alias_method :message, :speechString
       alias_method :message=, :setSpeechString
+      alias_method :rate=, :setRate
 
       private
 
@@ -21,6 +26,21 @@ module Motion
           speakable.to_speakable
         else
           speakable
+        end
+      end
+
+      def rate_for_symbol_or_float(rate)
+        case rate
+        when :maximum
+          AVSpeechUtteranceMaximumSpeechRate
+        when :minimum
+          AVSpeechUtteranceMinimumSpeechRate
+        when :default
+          AVSpeechUtteranceDefaultSpeechRate
+        when Fixnum, Float
+          rate.to_f
+        else
+          raise ArgumentError, "invalid rate given: '#{rate}'"
         end
       end
 

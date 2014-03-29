@@ -78,6 +78,17 @@ Motion::Speech::Speaker.speak "lorem" do |events|
 end
 ```
 
+### Customizing the speech
+You can pass several options directly through the speaker so that the spoken utterance is easily configured as you would like.
+
+```ruby
+
+# To customize the rate
+Motion::Speech::Speaker.speak "lorem", rate: :minimum # also accepts, :maximum, :default and any float between 0..1
+
+```
+
+
 ### Using methods for callbacks
 This is not unique to RubyMotion, but you can easily grab a block from a method on your class to use as a callback here too.
 
