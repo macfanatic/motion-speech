@@ -86,6 +86,9 @@ You can pass several options directly through the speaker so that the spoken utt
 # To customize the rate
 Motion::Speech::Speaker.speak "lorem", rate: :minimum # also accepts, :maximum, :default and any float between 0..1
 
+# To customize the pitch
+Motion::Speech::Speaker.speak "lorem", pitch: 2.0 # documentation specifies between 0.5 and 2.0, default being 1.0
+
 ```
 
 

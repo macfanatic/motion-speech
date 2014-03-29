@@ -5,6 +5,7 @@ module Motion
       def initialize(speakable, options={})
         self.message = speakable
         self.rate = options.fetch(:rate, 0.15)
+        self.pitch = options.fetch(:pitch, pitch)
       end
 
       def setSpeechString(speakable)
@@ -17,6 +18,8 @@ module Motion
 
       alias_method :message, :speechString
       alias_method :message=, :setSpeechString
+      alias_method :pitch, :pitchMultiplier
+      alias_method :pitch=, :setPitchMultiplier
       alias_method :rate=, :setRate
 
       private

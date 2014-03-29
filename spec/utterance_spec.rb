@@ -25,6 +25,18 @@ describe Motion::Speech::Utterance do
     end
   end
 
+  describe '#pitch' do
+    it "provides a #pitch accessor" do
+      utterance = Motion::Speech::Utterance.new(@message)
+      utterance.pitchMultiplier.should.be.equal utterance.pitch
+    end
+
+    it "allows customization on initialization" do
+      utterance = Motion::Speech::Utterance.new(@message, pitch: 0.5)
+      utterance.pitch.should.be.equal 0.5
+    end
+  end
+
   describe '#rate' do
     it "provides a default rate" do
       utterance = Motion::Speech::Utterance.new(@message)
