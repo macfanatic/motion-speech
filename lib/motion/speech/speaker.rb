@@ -1,7 +1,7 @@
 module Motion
   module Speech
     class Speaker
-      attr_reader :message, :options
+      attr_reader :events, :utterance
 
       MultipleCallsToSpeakError = Class.new(StandardError)
 
@@ -10,8 +10,8 @@ module Motion
       end
 
       def initialize(speakable, options={}, &block)
-        @message = string_from_speakable(speakable)
-        @options = options
+        @events = EventBlock.new
+        @utterance = Utterance.new(speakable, options)
         @spoken = false
 
         if block_given?
@@ -53,12 +53,8 @@ module Motion
         synthesizer.speaking?
       end
 
-      def utterance
-        return @utterance unless @utterance.nil?
-
-        @utterance = AVSpeechUtterance.speechUtteranceWithString(message)
-        @utterance.rate = options.fetch(:rate, 0.15)
-        @utterance
+      def message
+        utterance.message
       end
 
       def synthesizer
@@ -85,18 +81,6 @@ module Motion
 
       def speechSynthesizer(s, didContinueSpeechUtterance: utterance)
         events.call :resume, self
-      end
-
-      def events
-        @events ||= EventBlock.new
-      end
-
-      def string_from_speakable(speakable)
-        if speakable.respond_to?(:to_speakable)
-          speakable.to_speakable
-        else
-          speakable
-        end
       end
 
       def boundary_from_symbol(sym)

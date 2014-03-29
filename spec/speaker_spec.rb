@@ -12,17 +12,6 @@ describe Motion::Speech::Speaker do
       speaker.message.should.be.equal "lorem"
     end
 
-    it "accepts an options hash" do
-      speaker = Motion::Speech::Speaker.new "lorem", key: :value
-      speaker.options.should.be.equal key: :value
-    end
-
-    it "calls #to_speakable on sentence if supported" do
-      sentence = Speakable.new("lorem")
-      speaker = Motion::Speech::Speaker.new sentence
-      speaker.message.should.be.equal sentence.to_speakable
-    end
-
     it "raises exception if you make multiple calls to #speak" do
       speaker = Motion::Speech::Speaker.new "lorem"
       speaker.speak
@@ -39,19 +28,7 @@ describe Motion::Speech::Speaker do
     end
 
     it "returns an AVSpeechUtterance instance" do
-      @speaker.utterance.should.be.instance_of AVSpeechUtterance
-    end
-
-    describe '#rate' do
-
-      it "sets the speech rate to a reasonable default" do
-        @speaker.utterance.rate.should.be.equal 0.15
-      end
-
-      it "allows me to override the rate" do
-        speaker = Motion::Speech::Speaker.new "lorem", rate: 0.75
-        speaker.utterance.rate.should.be.equal 0.75
-      end
+      @speaker.utterance.should.be.instance_of Motion::Speech::Utterance
     end
   end
 
