@@ -69,4 +69,12 @@ describe Motion::Speech::Utterance do
     end
   end
 
+  describe '#voice' do
+    it "allows customization on initialization" do
+      voice = AVSpeechSynthesisVoice.speechVoices.last
+      utterance = Motion::Speech::Utterance.new(@message, voice: voice)
+      utterance.voice.should.be.equal voice
+    end
+  end
+
 end

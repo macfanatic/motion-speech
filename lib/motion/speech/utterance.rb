@@ -6,6 +6,7 @@ module Motion
         self.message = speakable
         self.rate = options.fetch(:rate, 0.15)
         self.pitch = options.fetch(:pitch, pitch)
+        self.voice = options.fetch(:voice, nil)
       end
 
       def setSpeechString(speakable)

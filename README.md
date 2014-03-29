@@ -89,6 +89,9 @@ Motion::Speech::Speaker.speak "lorem", rate: :minimum # also accepts, :maximum, 
 # To customize the pitch
 Motion::Speech::Speaker.speak "lorem", pitch: 2.0 # documentation specifies between 0.5 and 2.0, default being 1.0
 
+# To customize the voice
+voice_ref = AVSpeechSynthesisVoice.voiceWithLanguage("some_lang")
+Motion::Speech::Speaker.speak "lorem", voice: voice
 ```
 
 
