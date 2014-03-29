@@ -1,6 +1,8 @@
 # motion-speech
 Provides a simpler interface to using the AVSpeechSynthesizer related classes available natively in iOS 7.
 
+![Travis CI](https://secure.travis-ci.org/macfanatic/motion-speech.png?branch=master)
+
 ## Installation
 
 Add the following to your project's Gemfile to work with bundler:
