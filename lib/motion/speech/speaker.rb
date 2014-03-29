@@ -54,11 +54,7 @@ module Motion
       end
 
       def utterance
-        return @utterance unless @utterance.nil?
-
-        @utterance = AVSpeechUtterance.speechUtteranceWithString(message)
-        @utterance.rate = options.fetch(:rate, 0.15)
-        @utterance
+        @utterance ||= Utterance.new(message, options)
       end
 
       def synthesizer

@@ -39,19 +39,7 @@ describe Motion::Speech::Speaker do
     end
 
     it "returns an AVSpeechUtterance instance" do
-      @speaker.utterance.should.be.instance_of AVSpeechUtterance
-    end
-
-    describe '#rate' do
-
-      it "sets the speech rate to a reasonable default" do
-        @speaker.utterance.rate.should.be.equal 0.15
-      end
-
-      it "allows me to override the rate" do
-        speaker = Motion::Speech::Speaker.new "lorem", rate: 0.75
-        speaker.utterance.rate.should.be.equal 0.75
-      end
+      @speaker.utterance.should.be.instance_of Motion::Speech::Utterance
     end
   end
 
