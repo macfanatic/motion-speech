@@ -77,4 +77,11 @@ describe Motion::Speech::Utterance do
     end
   end
 
+  describe '#volumne' do
+    it "allows customization on initialization" do
+      utterance = Motion::Speech::Utterance.new(@message, volume: 0.123)
+      utterance.volume.should.be.equal 0.123
+    end
+  end
+
 end

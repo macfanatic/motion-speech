@@ -92,6 +92,9 @@ Motion::Speech::Speaker.speak "lorem", pitch: 2.0 # documentation specifies betw
 # To customize the voice
 voice_ref = AVSpeechSynthesisVoice.voiceWithLanguage("some_lang")
 Motion::Speech::Speaker.speak "lorem", voice: voice
+
+# To customize the volume
+Motion::Speech::Speaker.speak "lorem", volume: 0.5
 ```
 
 
