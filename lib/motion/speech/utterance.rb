@@ -5,9 +5,9 @@ module Motion
       def initialize(speakable, options={})
         self.message = speakable
         self.rate = options.fetch(:rate, 0.15)
-        self.pitch = options.fetch(:pitch, pitch)
+        self.pitch = options.fetch(:pitch, 1.0)
         self.voice = options.fetch(:voice, nil)
-        self.volume = options.fetch(:volume, volume)
+        self.volume = options.fetch(:volume, 1.0)
       end
 
       def setSpeechString(speakable)
