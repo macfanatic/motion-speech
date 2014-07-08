@@ -115,7 +115,7 @@ class SomeController < UIViewController
 
   private
 
-  def lock_iu(speaker)
+  def lock_ui(speaker)
     self.view.userInteractionEnabled = false
   end
 
